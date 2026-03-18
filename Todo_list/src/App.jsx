@@ -1,24 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-import TodoList from './TodoList.jsx'
-function App() {
+import { useState } from "react";
+import "./App.css";
+import TodoList from "./TodoList.jsx";
 
-  const [todoListArray, setTodos] = useState([]);
-  const addTodo = (todo) => {
-    setTodos([...todoListArray, TodoList({ title: todo })]);
+function App() {
+  const [listTitle, setListTitle] = useState("");
+  const [listIdCounter, setListIdCounter] = useState(1);
+  const [todoLists, setTodoLists] = useState([]);
+
+  const addTodoList = () => {
+    const normalizedTitle = listTitle.trim();
+    if (normalizedTitle === "") {
+      return;
+    }
+
+    setTodoLists((previousLists) => [
+      ...previousLists,
+      { id: listIdCounter, title: normalizedTitle },
+    ]);
+    setListIdCounter((previousCounter) => previousCounter + 1);
+    setListTitle("");
   };
+
+  const handleTitleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      addTodoList();
+    }
+  };
+
   return (
-    <div>
-      <div>
-        <h1> Todo list</h1>
+    <div className="app-wrapper">
+      <h1 className="app-title">Tworzenie wielu list Todo</h1>
+
+      <div className="list-creator">
+        <input
+          type="text"
+          value={listTitle}
+          onChange={(event) => setListTitle(event.target.value)}
+          onKeyDown={handleTitleKeyDown}
+          placeholder="Wpisz naglowek nowej listy"
+        />
+        <button onClick={addTodoList}>Utworz liste</button>
       </div>
-      <input id="todo-input" type="text" placeholder='Add a new todo list' />
-      <button onClick={() => addTodo(document.querySelector('input').value)}>Add</button>
+
+      <div className="todo-lists-grid">
+        {todoLists.map((list) => (
+          <TodoList key={list.id} title={list.title} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -182,3 +182,54 @@
     border-right-color: var(--border);
   }
 }
+
+.app-wrapper {
+  width: min(1100px, 100% - 2rem);
+  margin: 2rem auto;
+}
+
+.app-title {
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.list-creator {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.list-creator input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #b5bcc4;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+}
+
+.list-creator button {
+  border: none;
+  border-radius: 8px;
+  background: #0f5ed7;
+  color: #fff;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+}
+
+.todo-lists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .list-creator {
+    flex-direction: column;
+  }
+
+  .list-creator button {
+    width: 100%;
+  }
+}
